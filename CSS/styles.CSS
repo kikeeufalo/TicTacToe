@@ -57,3 +57,19 @@ button {
     background-color: rgba(0, 0, 0, 0);
     border: none;
 }
+
+.meioDireito {
+    border-right: 2px solid black;
+}
+
+.meioEsquerdo {
+    border-left: 2px solid black;
+}
+
+.meioCima {
+    border-top: 2px solid black;
+}
+
+.meioBaixo {
+    border-bottom: 2px solid black;
+}
