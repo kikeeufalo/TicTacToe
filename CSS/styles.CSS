@@ -20,4 +20,24 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 400;
     text-shadow: 3px 4px 5px black;
+    margin-top: 50px;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    width: auto;
+}
+
+.game {
+    position: absolute;
+    background-color: #f2af60;
+    min-width: 300px;
+    min-height: 300px;
+    width: auto;
+    height: auto;
+    margin-top: 50px;
+    border-radius: 3px;
+    border: 1px solid #160921;
+    box-shadow: 2px 2px 5px black;
 }
