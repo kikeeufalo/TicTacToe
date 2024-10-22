@@ -58,6 +58,12 @@ button {
     border: none;
 }
 
+.font {
+    font-size: 50pt;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .meioDireito {
     border-right: 2px solid black;
 }
@@ -72,4 +78,9 @@ button {
 
 .meioBaixo {
     border-bottom: 2px solid black;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.4);
 }
