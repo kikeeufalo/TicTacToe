@@ -1,3 +1,14 @@
 body {
-    background-color: rgb(65, 65, 65);
+    background: linear-gradient(
+        -90deg,
+        #160921,
+        #220f31,
+        #37184e,
+        #481f68
+    );
+}
+
+.containerGame {
+    padding: 0;
+    margin: 0;
 }
