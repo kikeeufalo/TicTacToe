@@ -15,15 +15,12 @@ let tabuleiro = [
 ]
 
 doisPlayerBtn.addEventListener('click', function() {
-
+    valorInicialTroca()
 })
 
 iaPlayerBtn.addEventListener('click', function() {
-    if (!ia) {
-        ia = true
-    }else {
-        ia = false
-    }
+    valorInicialTroca()
+    ia = true
 })
 
 function verific(y) {
@@ -61,6 +58,8 @@ function verific(y) {
                     iterator.textContent = "O"
                     vezOrdem = true
                     console.log(`player dois`)
+                }else {
+                    alert("Você esta jogando com IA")
                 }
 
             }
@@ -107,4 +106,24 @@ function verificGanhador() {
         }
     }
     
+}
+
+function valorInicialTroca() {
+    controlePartidaGanha = true
+    array = []
+    scorePlayerDois = 0
+    scorePlayerUm = 0
+    vezOrdem = true
+    tabuleiro = [
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', '']
+    ]
+
+    for (let i = 1; i <= 9; i++) {
+        let btn = window.document.getElementById(`${i}`)
+        btn.textContent = ''
+    }
+
+    alert('Recomeçando...')
 }
