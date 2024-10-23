@@ -1,8 +1,12 @@
+const doisPlayerBtn = window.document.getElementById('btn-1')
+const iaPlayerBtn = window.document.getElementById('btn-2')
+
 let vezOrdem = true
 let scorePlayerUm = 0
 let scorePlayerDois = 0
 let array = [] //armazena as posições ja jogadas
 let controlePartidaGanha = true
+let ia = false
 
 let tabuleiro = [
     ['', '', ''],
@@ -10,12 +14,30 @@ let tabuleiro = [
     ['', '', '']
 ]
 
+doisPlayerBtn.addEventListener('click', function() {
+
+})
+
+iaPlayerBtn.addEventListener('click', function() {
+    if (!ia) {
+        ia = true
+    }else {
+        ia = false
+    }
+})
+
 function verific(y) {
     let iterator = window.document.getElementById(`${y}`)
 
     if (controlePartidaGanha) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
-            console.log('posição ja jogada')
+            if (ia && !vezOrdem) {
+                let i = array.indexOf(y)
+                if (i !== -1) {
+                    array.splice(i, 1)
+                }
+            }
+            alert('posição ja jogada')
         }else {    
             let jogada = y -1    
             if (vezOrdem) { // player um
@@ -33,17 +55,20 @@ function verific(y) {
                 console.log(`player um`)
             }else {//player dois
     
-                if (jogada <= 2) {
-                    tabuleiro[0][jogada] = 'O'
-                }else if (jogada <= 5) {
-                    tabuleiro[1][jogada - 3] = 'O'
-                }else {
-                    tabuleiro[2][jogada - 6] = 'O'
+                if (!ia) {
+                    if (jogada <= 2) {
+                        tabuleiro[0][jogada] = 'O'
+                    }else if (jogada <= 5) {
+                        tabuleiro[1][jogada - 3] = 'O'
+                    }else {
+                        tabuleiro[2][jogada - 6] = 'O'
+                    }
+        
+                    iterator.textContent = "O"
+                    vezOrdem = true
+                    console.log(`player dois`)
                 }
-    
-                iterator.textContent = "O"
-                vezOrdem = true
-                console.log(`player dois`)
+
             }
             array.push(y)
         }
