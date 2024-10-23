@@ -2,6 +2,7 @@ let vezOrdem = true
 let scorePlayerUm = 0
 let scorePlayerDois = 0
 let array = [] //armazena as posições ja jogadas
+let controlePartidaGanha = true
 
 let tabuleiro = [
     ['', '', ''],
@@ -12,26 +13,44 @@ let tabuleiro = [
 function verific(y) {
     let iterator = window.document.getElementById(`${y}`)
 
-    if (array.includes(y)) { // verifica se a posição ja foi jogada
-        console.log('posição ja jogada')
-    }else {    
-        let jogada = y -1    
-        if (vezOrdem) { // player um
-            if (jogada <= 2) {
-                tabuleiro[0][jogada] = 'X'
-            }else if (jogada <= 5) {
-                tabuleiro[1][Math.abs(jogada - 5)] = 'X' // por enquanto densenvolver melhor a logica
+    if (controlePartidaGanha) {
+        if (array.includes(y)) { // verifica se a posição ja foi jogada
+            console.log('posição ja jogada')
+        }else {    
+            let jogada = y -1    
+            if (vezOrdem) { // player um
+    
+                if (jogada <= 2) { // define o lugar jogado no tabuleiro
+                    tabuleiro[0][jogada] = 'X'
+                }else if (jogada <= 5) {
+                    tabuleiro[1][jogada - 3] = 'X'
+                }else {
+                    tabuleiro[2][jogada - 6] = 'X'
+                }
+    
+                iterator.textContent = 'X'
+                vezOrdem = false
+                console.log(`player um`)
+            }else {//player dois
+    
+                if (jogada <= 2) {
+                    tabuleiro[0][jogada] = 'O'
+                }else if (jogada <= 5) {
+                    tabuleiro[1][jogada - 3] = 'O'
+                }else {
+                    tabuleiro[2][jogada - 6] = 'O'
+                }
+    
+                iterator.textContent = "O"
+                vezOrdem = true
+                console.log(`player dois`)
             }
-            iterator.textContent = 'X'
-            vezOrdem = false
-            console.log(`player um`)
-        }else {//player dois
-            iterator.textContent = "O"
-            vezOrdem = true
-            console.log(`player dois`)
+            array.push(y)
         }
-        array.push(y)
+    }else {
+        alert('A partida acabou!')
     }
+
     verificGanhador()
     console.log(tabuleiro)
 }
@@ -53,7 +72,12 @@ function verificGanhador() {
 
     for (let combinacao of combinacoesPosiveis) {
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
-          return combinacao[0]; // Retorna 'X' ou 'O' como vencedor
+            controlePartidaGanha = false
+            if (combinacao[0 === 'X']) {
+                scorePlayerUm += 1
+            }else {
+                scorePlayerDois += 1
+            }
         }
     }
     
