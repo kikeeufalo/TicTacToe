@@ -2,8 +2,8 @@ const doisPlayerBtn = window.document.getElementById('btn-1')
 const iaPlayerBtn = window.document.getElementById('btn-2')
 
 let vezOrdem = true
-let scorePlayerUm = 0
-let scorePlayerDois = 0
+let scorePlayerUm = window.document.getElementById('scoreP1')
+let scorePlayerDois = window.document.getElementById('scoreP2')
 let array = [] //armazena as posições ja jogadas
 let controlePartidaGanha = true
 let ia = false
@@ -99,10 +99,11 @@ function verificGanhador() {
     for (let combinacao of combinacoesPosiveis) {
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
-            if (combinacao[0 === 'X']) {
-                scorePlayerUm += 1
+            if (combinacao[0] === 'X') {
+                alert(`Player um ganhou ${combinacao[0]}`)
+                scorePlayerUm.innerText += 1
             }else {
-                scorePlayerDois += 1
+                alert(`player dois ganhou ${combinacao[0]}`)
             }
         }
     }
