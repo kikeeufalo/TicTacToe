@@ -40,15 +40,20 @@ function verific(y) {
 
                         for (let x = 0; x < 3; x++) {
                             for (let y = 0; y < 3; y++) {
+
                                 if (tabuleiro[x][y] === 'O') {
                                     let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
+
                                     for (let i = 0; i < posicaoArray.length; i++) {
                                         let index = i - 1
+
                                         if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
                                             let iteratorIA = window.document.getElementById(`${i}`)
+                                            var numeros = [...new Set(array)]
+
                                             iteratorIA.textContent = 'O'
                                             array.push(i)
-                                            console.log(array.sort())
+                                            console.log(numeros.sort())
                                         }
                                     }
                                 }
