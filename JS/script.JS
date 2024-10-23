@@ -16,6 +16,7 @@ let tabuleiro = [
 
 doisPlayerBtn.addEventListener('click', function() {
     valorInicialTroca()
+    ia = false
 })
 
 iaPlayerBtn.addEventListener('click', function() {
@@ -106,6 +107,16 @@ function verificGanhador() {
         }
     }
     
+    if (
+        tabuleiro[0][0] !== '' && tabuleiro[0][1] !== '' && tabuleiro[0][2] !== '' &&
+        tabuleiro[1][0] !== '' && tabuleiro[1][1] !== '' && tabuleiro[1][2] !== '' &&
+        tabuleiro[2][0] !== '' && tabuleiro[2][1] !== '' && tabuleiro[2][2] !== ''
+    ) {
+        setTimeout(() => {
+            alert('Deu Velhaa!')
+            valorInicialTroca()
+        }, 1000)
+    }
 }
 
 function valorInicialTroca() {
