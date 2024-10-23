@@ -49,11 +49,9 @@ function verific(y) {
 
                                         if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
                                             let iteratorIA = window.document.getElementById(`${i}`)
-                                            var numeros = [...new Set(array)]
-
                                             iteratorIA.textContent = 'O'
                                             array.push(i)
-                                            console.log(numeros.sort())
+                                            console.log(array.sort())
                                         }
                                     }
                                 }
@@ -61,7 +59,7 @@ function verific(y) {
                         }
 
                         vezOrdem = true
-                    }, 1000) 
+                    }, 2000) 
                 }
 
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
@@ -74,7 +72,6 @@ function verific(y) {
     
                 iterator.textContent = 'X'
                 vezOrdem = false
-                console.log(`player um`)
             }else {//player dois
     
                 if (!ia) {
@@ -113,6 +110,9 @@ function verific(y) {
 
 function jogadaIA() {
     let possiveisJogadas = []
+    let ultimoNumeroTirado = 0
+
+
 
     for (let x = 0; x < 3; x++) {
         for (let y = 0; y < 3; y++) {
@@ -123,10 +123,19 @@ function jogadaIA() {
     }
 
     if (possiveisJogadas.length > 0) {
-        let jogadaAleatoria = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
+        let jogadaAleatoria = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length - 1)]
 
-        tabuleiro[jogadaAleatoria[0]][jogadaAleatoria[1]] = "O"
-        console.log(`IA jogou em (${jogadaAleatoria[0]}, ${jogadaAleatoria[1]})`)
+        if (jogadaAleatoria == ultimoNumeroTirado) {
+            let jogadaAleatoria2 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length - 1)]
+            tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
+            console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
+            ultimoNumeroTirado = jogadaAleatoria2
+        }else {
+            tabuleiro[jogadaAleatoria[0]][jogadaAleatoria[1]] = "O"  //estava tirando o mesmo numero aleatorio arrumar depois
+            console.log(`IA jogou em (${jogadaAleatoria[0]}, ${jogadaAleatoria[1]})`)
+            ultimoNumeroTirado = jogadaAleatoria
+        }
+
     }
 
 }
