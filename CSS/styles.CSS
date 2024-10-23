@@ -34,7 +34,7 @@ body {
     font-size: 14pt;
     font-family: Arial, Helvetica, sans-serif;
     padding: 3px;
-    color: #d0d26f;
+    color: #e7e7c6;
     background: none;
     border:  none;
     width: 100px;
@@ -47,7 +47,7 @@ input:focus {
 }
 
 .scorePlayers p {
-    color: #d0d26f;
+    color: #d6d6b4;
     font-size: 16pt;
     font-weight: bold;
     font-family: Georgia, 'Times New Roman', Times, serif;
