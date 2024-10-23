@@ -15,12 +15,12 @@ let tabuleiro = [
 ]
 
 doisPlayerBtn.addEventListener('click', function() {
-    valorInicialTroca()
+    valorInicialTroca(true)
     ia = false
 })
 
 iaPlayerBtn.addEventListener('click', function() {
-    valorInicialTroca()
+    valorInicialTroca(true)
     ia = true
 })
 
@@ -100,10 +100,19 @@ function verificGanhador() {
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
             if (combinacao[0] === 'X') {
-                alert(`Player um ganhou ${combinacao[0]}`)
-                scorePlayerUm.innerText += 1
+                setTimeout(() => {
+                    alert(`Player um ganhou`)
+                    let s = Number(scorePlayerUm.textContent)
+                    scorePlayerUm.textContent = s + 1
+                    valorInicialTroca()
+                },1000)
             }else {
-                alert(`player dois ganhou ${combinacao[0]}`)
+                setTimeout(() => {
+                    alert(`player dois ganhou`)
+                    let s = Number(scorePlayerDois.textContent)
+                    scorePlayerDois.textContent = s + 1
+                    valorInicialTroca()
+                },1000)
             }
         }
     }
@@ -120,11 +129,13 @@ function verificGanhador() {
     }
 }
 
-function valorInicialTroca() {
+function valorInicialTroca(x) {
+    if (x) {
+        scorePlayerDois.textContent = 0
+        scorePlayerUm.textContent = 0
+    }
     controlePartidaGanha = true
     array = []
-    scorePlayerDois = 0
-    scorePlayerUm = 0
     vezOrdem = true
     tabuleiro = [
         ['', '', ''],
