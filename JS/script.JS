@@ -37,6 +37,24 @@ function verific(y) {
                 if (ia) {
                     setTimeout(() => {     
                         jogadaIA()
+
+                        for (let x = 0; x < 3; x++) {
+                            for (let y = 0; y < 3; y++) {
+                                if (tabuleiro[x][y] === 'O') {
+                                    let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
+                                    for (let i = 0; i < posicaoArray.length; i++) {
+                                        let index = i - 1
+                                        if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
+                                            let iteratorIA = window.document.getElementById(`${i}`)
+                                            iteratorIA.textContent = 'O'
+                                            array.push(i)
+                                            console.log(array.sort())
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         vezOrdem = true
                     }, 1000) 
                 }
@@ -106,20 +124,6 @@ function jogadaIA() {
         console.log(`IA jogou em (${jogadaAleatoria[0]}, ${jogadaAleatoria[1]})`)
     }
 
-    for (let x = 0; x < 3; x++) {
-        for (let y = 0; y < 3; y++) {
-            if (tabuleiro[x][y] === 'O') {
-                let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
-                for (let i = 0; i < posicaoArray.length; i++) {
-                    let index = i - 1
-                    if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
-                        array.push(i)
-                        console.log(array.sort())
-                    }
-                }
-            }
-        }
-    }
 }
 
 function verificGanhador() {
