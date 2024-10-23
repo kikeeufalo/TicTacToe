@@ -33,7 +33,14 @@ function verific(y) {
         }else {    
             let jogada = y -1    
             if (vezOrdem) { // player um
-    
+                
+                if (ia) {
+                    setTimeout(() => {     
+                        jogadaIA()
+                        vezOrdem = true
+                    }, 1000) 
+                }
+
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
                     tabuleiro[0][jogada] = 'X'
                 }else if (jogada <= 5) {
@@ -62,7 +69,7 @@ function verific(y) {
                 }else {
                     alert("Você esta jogando com IA")
                 }
-
+                
             }
             array.push(y)
 
@@ -79,6 +86,25 @@ function verific(y) {
 
     verificGanhador()
     console.log(tabuleiro)
+}
+
+function jogadaIA() {
+    let possiveisJogadas = []
+
+    for (let x = 0; x < 3; x++) {
+        for (let y = 0; y < 3; y++) {
+            if (tabuleiro[x][y] === '') {
+                possiveisJogadas.push([x, y])
+            }
+        }
+    }
+
+    if (possiveisJogadas.length > 0) {
+        let jogadaAleatoria = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
+
+        tabuleiro[jogadaAleatoria[0]][jogadaAleatoria[1]] = "O"
+        console.log(`IA jogou em (${jogadaAleatoria[0]}, ${jogadaAleatoria[1]})`)
+    }
 }
 
 function verificGanhador() {
