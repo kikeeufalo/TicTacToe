@@ -31,12 +31,6 @@ function verific(y) {
 
     if (controlePartidaGanha) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
-            if (ia && !vezOrdem) {
-                let i = array.indexOf(y)
-                if (i !== -1) {
-                    array.splice(i, 1)
-                }
-            }
             alert('posição ja jogada')
         }else {    
             let jogada = y -1    
@@ -71,6 +65,13 @@ function verific(y) {
 
             }
             array.push(y)
+
+            if (ia && !vezOrdem) { // verifica com que esta sendo jogado
+                let i = array.indexOf(y)
+                if (i !== -1) {
+                    array.splice(i, 1)
+                }
+            }
         }
     }else {
         alert('A partida acabou!')
