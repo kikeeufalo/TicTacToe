@@ -39,7 +39,7 @@ function modoJogo(x) {
             mensagens('')
         }, 2000)
     }else {
-        escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
+        escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.4)'
     }
 }
 
@@ -242,7 +242,8 @@ function mensagens(x, y) {
     msg.style.marginTop = '135px'
     msg.style.position = 'absolute'
     msg.style.width = '100%'
-    
+    msg.style.textShadow = '0px 0px 5px black'
+
     msg.id = 'msg'
 
     if (y === 'aviso') {
