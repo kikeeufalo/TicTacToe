@@ -14,14 +14,14 @@ let tabuleiro = [
     ['', '', '']
 ]
 
-doisPlayerBtn.addEventListener('click', function() {
+doisPlayerBtn.addEventListener('click', function () {
     valorInicialTroca(true)
     ia = false
     controlePartidaGanha = true
     modoJogo('escolhido')
 })
 
-iaPlayerBtn.addEventListener('click', function() {
+iaPlayerBtn.addEventListener('click', function () {
     valorInicialTroca(true)
     ia = true
     controlePartidaGanha = true
@@ -32,13 +32,13 @@ function modoJogo(x) {
     let escolhaModo = window.document.getElementById('play')
     if (x === 'escolhido') {
         escolhaModo.style.backgroundColor = ''
-    }else if (x === 'msg') {
+    } else if (x === 'msg') {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
         setTimeout(() => {
             modoJogo('escolhido')
             mensagens('')
         }, 2000)
-    }else {
+    } else {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.4)'
     }
 }
@@ -49,39 +49,39 @@ function verific(y) {
     if (controlePartidaGanha) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
             mensagens('posição ja jogada')
-        }else {    
-            let jogada = y -1            
+        } else {
+            let jogada = y - 1
             if (vezOrdem) { // player um
                 vezOrdem = false
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
                     tabuleiro[0][jogada] = 'X'
-                }else if (jogada <= 5) {
+                } else if (jogada <= 5) {
                     tabuleiro[1][jogada - 3] = 'X'
-                }else {
+                } else {
                     tabuleiro[2][jogada - 6] = 'X'
                 }
-                
+
                 console.log('')
 
                 iterator.textContent = 'X'
                 if (ia) {
                     jogadaIA()
                 }
-            }else {//player dois
-                
+            } else {//player dois
+
                 if (!ia) {
                     if (jogada <= 2) {
                         tabuleiro[0][jogada] = 'O'
-                    }else if (jogada <= 5) {
+                    } else if (jogada <= 5) {
                         tabuleiro[1][jogada - 3] = 'O'
-                    }else {
+                    } else {
                         tabuleiro[2][jogada - 6] = 'O'
                     }
-        
+
                     iterator.textContent = "O"
                     vezOrdem = true
                     console.log(`player dois`)
-                }else {
+                } else {
                     mensagens('Você esta jogando com IA')
                 }
 
@@ -95,7 +95,7 @@ function verific(y) {
                 }
             }
         }
-    }else {
+    } else {
         mensagens('Escolha um modo', 'aviso')
     }
 
@@ -116,13 +116,13 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 
     if (possiveisJogadas.length > 0) {
         let jogadaAleatoria2 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
-        
+
         tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
         console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
         possiveisJogadas = []
     }
 
-    setTimeout(() => {    
+    setTimeout(() => {
         vezOrdem = true
         for (let x = 0; x < 3; x++) {
             for (let y = 0; y < 3; y++) {
@@ -143,7 +143,94 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
                 }
             }
         }
-    }, 500) 
+    }, 500)
+
+    // -------------------------------------
+
+
+
+    let board = ['', '', '', '', '', '', '', '', ''];
+    let human = 'X';
+    let ai = 'O';
+    let currentPlayer = human;
+
+    const winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    function aiMove() {
+        let bestScore = -Infinity;
+        let move;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = ai;
+                let score = minimax(board, 0, false);
+                board[i] = '';
+                if (score > bestScore) {
+                    bestScore = score;
+                    move = i;
+                }
+            }
+        }
+        board[move] = ai;
+        currentPlayer = human;
+        checkWinner(board, ai);
+    }
+
+    function minimax(board, depth, isMaximizing) {
+        let winner = checkWinner(board, human) || checkWinner(board, ai);
+        if (winner === human) return -10 + depth;
+        if (winner === ai) return 10 - depth;
+        if (checkDraw()) return 0;
+
+        if (isMaximizing) {
+            let bestScore = -Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = ai;
+                    let score = minimax(board, depth + 1, false);
+                    board[i] = '';
+                    bestScore = Math.max(score, bestScore);
+                }
+            }
+            return bestScore;
+        } else {
+            let bestScore = Infinity;
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    board[i] = human;
+                    let score = minimax(board, depth + 1, true);
+                    board[i] = '';
+                    bestScore = Math.min(score, bestScore);
+                }
+            }
+            return bestScore;
+        }
+    }
+
+    function checkWinner(board, player) {
+        for (let combo of winningCombinations) {
+            if (combo.every(index => board[index] === player)) {
+                alert(`${player} venceu!`);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    //---------------------------------------
+
+
+
 }
 
 function verificGanhador() {
@@ -153,7 +240,7 @@ function verificGanhador() {
         //horizontal
         [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
         [tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]],
-        [tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]], 
+        [tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]],
         //vertical
         [tabuleiro[0][0], tabuleiro[1][0], tabuleiro[2][0]],
         [tabuleiro[0][1], tabuleiro[1][1], tabuleiro[2][1]],
@@ -179,9 +266,9 @@ function verificGanhador() {
                     if (ganhador) {
                         valorInicialTroca()
                     }
-                },500)
+                }, 500)
                 return combinacao[0]
-            }else {
+            } else {
                 ganhou = true
                 ganhador = true
                 setTimeout(() => {
@@ -191,7 +278,7 @@ function verificGanhador() {
                     if (ganhador) {
                         valorInicialTroca()
                     }
-            },500)
+                }, 500)
             }
             return combinacao[0]
         }
@@ -259,12 +346,12 @@ function mensagens(x, y) {
         setTimeout(() => {
             m.removeChild(msg)
         }, 1000)
-    }else if (x !== '') {
+    } else if (x !== '') {
         msg.textContent = x
         m.appendChild(msg)
 
         modoJogo('msg')
-    }else {
+    } else {
         let esconde = window.document.getElementById('msg')
         m.removeChild(esconde)
     }
