@@ -17,19 +17,30 @@ let tabuleiro = [
 doisPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = false
+    modoJogo('escolhido')
 })
 
 iaPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
+    modoJogo('escolhido')
 })
+
+function modoJogo(x) {
+    let escolhaModo = window.document.getElementById('play')
+    if (x === 'escolhido') {
+        escolhaModo.style.backgroundColor = ''
+    }else {
+        escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
+    }
+}
 
 function verific(y) {
     let iterator = window.document.getElementById(`${y}`)
 
     if (controlePartidaGanha) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
-            alert('posição ja jogada')
+            mensagens('posição ja jogada')
         }else {    
             let jogada = y -1            
             if (vezOrdem) { // player um
@@ -211,4 +222,17 @@ function valorInicialTroca(x) {
     }
 
     alert('Recomeçando...')
+}
+
+function mensagens(x) {
+    let msg = window.document.getElementById('play')
+
+    msg.style.color = 'white'
+    msg.style.fontWeight = 'bold'
+    msg.style.fontSize = '22pt'
+    msg.style.display = 'flex'
+    msg.style
+
+    
+    msg.textContent = x
 }
