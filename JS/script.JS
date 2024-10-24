@@ -93,6 +93,8 @@ function verific(y) {
                 }
             }
         }
+    }else {
+        mensagens('Escolha um modo', 'aviso')
     }
 
     verificGanhador()
@@ -228,25 +230,31 @@ function valorInicialTroca(x) {
     }
 }
 
-function mensagens(x) {
+function mensagens(x, y) {
     let m = window.document.getElementById('play')
     let msg = document.createElement('p')
 
-    if (x !== '') {
-        msg.style.color = 'white'
-        msg.style.fontWeight = 'bold'
-        msg.style.fontSize = '22pt'
-        msg.style.display = 'flex'
-        msg.style.justifyContent = 'center'
-        msg.style.marginTop = '100px'
-        msg.style.position = 'absolute'
-        msg.style.width = '100%'
-        
-        msg.id = 'msg'
-
-        msg.textContent = x
+    msg.style.color = 'white'
+    msg.style.fontWeight = 'bold'
+    msg.style.fontSize = '22pt'
+    msg.style.display = 'flex'
+    msg.style.justifyContent = 'center'
+    msg.style.marginTop = '135px'
+    msg.style.position = 'absolute'
+    msg.style.width = '100%'
     
+    msg.id = 'msg'
+
+    if (y === 'aviso') {
+        msg.textContent = x
         m.appendChild(msg)
+        setTimeout(() => {
+            m.removeChild(msg)
+        }, 1000)
+    }else if (x !== '') {
+        msg.textContent = x
+        m.appendChild(msg)
+
         modoJogo('msg')
     }else {
         let esconde = window.document.getElementById('msg')
