@@ -225,14 +225,18 @@ function valorInicialTroca(x) {
 }
 
 function mensagens(x) {
-    let msg = window.document.getElementById('play')
+    let m = window.document.getElementById('play')
+    let msg = document.createElement('div')
 
     msg.style.color = 'white'
     msg.style.fontWeight = 'bold'
     msg.style.fontSize = '22pt'
     msg.style.display = 'flex'
-    msg.style
-
+    msg.style.justifyContent = 'center'
+    msg.style.marginTop = '60px'
+    msg.style.position = 'absolute'
     
     msg.textContent = x
+
+    m.appendChild(msg)
 }
