@@ -30,9 +30,7 @@ function aiMove() {
     }
     board[move] = ai;
     currentPlayer = human;
-    createBoard();
     checkWinner(board, ai);
-    checkDraw();
 }
 
 function minimax(board, depth, isMaximizing) {
@@ -75,19 +73,3 @@ function checkWinner(board, player) {
     }
     return false;
 }
-
-function checkDraw() {
-    if (board.every(cell => cell !== '')) {
-        alert('Empate!');
-        return true;
-    }
-    return false;
-}
-
-function resetGame() {
-    board = ['', '', '', '', '', '', '', '', ''];
-    currentPlayer = human;
-    createBoard();
-}
-
-createBoard();
