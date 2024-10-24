@@ -31,37 +31,9 @@ function verific(y) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
             alert('posição ja jogada')
         }else {    
-            let jogada = y -1    
+            let jogada = y -1            
             if (vezOrdem) { // player um
                 
-                if (ia) {
-                    setTimeout(() => {     
-                        jogadaIA()
-
-                        for (let x = 0; x < 3; x++) {
-                            for (let y = 0; y < 3; y++) {
-
-                                if (tabuleiro[x][y] === 'O') {
-                                    let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
-
-                                    for (let i = 0; i < posicaoArray.length; i++) {
-                                        let index = i - 1
-
-                                        if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
-                                            let iteratorIA = window.document.getElementById(`${i}`)
-                                            iteratorIA.textContent = 'O'
-                                            array.push(i)
-                                            console.log(array.sort())
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        vezOrdem = true
-                    }, 2000) 
-                }
-
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
                     tabuleiro[0][jogada] = 'X'
                 }else if (jogada <= 5) {
@@ -72,8 +44,11 @@ function verific(y) {
     
                 iterator.textContent = 'X'
                 vezOrdem = false
+                if (ia) {
+                    jogadaIA()
+                }
             }else {//player dois
-    
+                
                 if (!ia) {
                     if (jogada <= 2) {
                         tabuleiro[0][jogada] = 'O'
@@ -93,7 +68,7 @@ function verific(y) {
             }
             array.push(y)
 
-            if (ia && !vezOrdem) { // verifica com que esta sendo jogado
+            if (ia && !vezOrdem) { // verifica com quem esta sendo jogado
                 let i = array.indexOf(y)
                 if (i !== -1) {
                     array.splice(i, 1)
@@ -110,9 +85,6 @@ function verific(y) {
 
 function jogadaIA() {
     let possiveisJogadas = []
-    let ultimoNumeroTirado = 0
-
-
 
     for (let x = 0; x < 3; x++) {
         for (let y = 0; y < 3; y++) {
@@ -123,21 +95,34 @@ function jogadaIA() {
     }
 
     if (possiveisJogadas.length > 0) {
-        let jogadaAleatoria = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length - 1)]
-
-        if (jogadaAleatoria == ultimoNumeroTirado) {
-            let jogadaAleatoria2 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length - 1)]
-            tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
-            console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
-            ultimoNumeroTirado = jogadaAleatoria2
-        }else {
-            tabuleiro[jogadaAleatoria[0]][jogadaAleatoria[1]] = "O"  //estava tirando o mesmo numero aleatorio arrumar depois
-            console.log(`IA jogou em (${jogadaAleatoria[0]}, ${jogadaAleatoria[1]})`)
-            ultimoNumeroTirado = jogadaAleatoria
-        }
-
+        let jogadaAleatoria2 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
+        tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
+        console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
     }
 
+    setTimeout(() => {    
+        for (let x = 0; x < 3; x++) {
+            for (let y = 0; y < 3; y++) {
+
+                if (tabuleiro[x][y] === 'O') {
+                    let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
+
+                    for (let i = 0; i < posicaoArray.length; i++) {
+                        let index = i - 1
+
+                        if (posicaoArray[index] === 'O' && array.indexOf(index) == -1) {
+                            let iteratorIA = window.document.getElementById(`${i}`)
+                            iteratorIA.textContent = 'O'
+                            array.push(i)
+                            console.log(array.sort())
+                        }
+                    }
+                }
+            }
+        }
+    }, 500) 
+
+    vezOrdem = true
 }
 
 function verificGanhador() {
