@@ -60,7 +60,9 @@ function verific(y) {
                 }else {
                     tabuleiro[2][jogada - 6] = 'X'
                 }
-    
+                
+                console.log('')
+
                 iterator.textContent = 'X'
                 if (ia) {
                     jogadaIA()
@@ -289,6 +291,11 @@ function minimax(newBoard, jogador) { // escolhe a melhor opção de jogada para
         })
     }
     return bestMove
+}
+
+function iaMove(board) { //melhor jogada da ia
+    let move = minimax(board, 'O')
+    board[move.index] = 'O'
 }
 
 function mensagens(x, y) {
