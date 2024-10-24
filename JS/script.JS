@@ -129,6 +129,7 @@ function jogadaIA() {
 
 function verificGanhador() {
     let ganhador = false
+    let ganhou = false
     const combinacoesPosiveis = [
         //horizontal
         [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
@@ -143,24 +144,15 @@ function verificGanhador() {
         [tabuleiro[0][2], tabuleiro[1][1], tabuleiro[2][0]]
     ]
 
-    if (
-        tabuleiro[0][0] !== '' && tabuleiro[0][1] !== '' && tabuleiro[0][2] !== '' &&
-        tabuleiro[1][0] !== '' && tabuleiro[1][1] !== '' && tabuleiro[1][2] !== '' &&
-        tabuleiro[2][0] !== '' && tabuleiro[2][1] !== '' && tabuleiro[2][2] !== ''
-    ) {
-        if (!ganhador) {
-            setTimeout(() => {
-                alert('Deu Velhaa!')
-                valorInicialTroca()
-                ganhador == true
-            }, 500)
-        }
-    }
+
 
     for (let combinacao of combinacoesPosiveis) {
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
             if (combinacao[0] === 'X') {
+                ganhou = true
+                ganhador = true
+
                 setTimeout(() => {
                     alert(`Player um ganhou`)
                     let s = Number(scorePlayerUm.textContent)
@@ -168,9 +160,10 @@ function verificGanhador() {
                     if (ganhador) {
                         valorInicialTroca()
                     }
-                    ganhador = true
                 },500)
             }else {
+                ganhou = true
+                ganhador = true
                 setTimeout(() => {
                     alert(`player dois ganhou`)
                     let s = Number(scorePlayerDois.textContent)
@@ -178,8 +171,23 @@ function verificGanhador() {
                     if (ganhador) {
                         valorInicialTroca()
                     }
-                },500)
-                ganhador = true
+            },500)
+            }
+        }
+    }
+    if (!ganhou) {
+        if (
+            tabuleiro[0][0] !== '' && tabuleiro[0][1] !== '' && tabuleiro[0][2] !== '' &&
+            tabuleiro[1][0] !== '' && tabuleiro[1][1] !== '' && tabuleiro[1][2] !== '' &&
+            tabuleiro[2][0] !== '' && tabuleiro[2][1] !== '' && tabuleiro[2][2] !== ''
+        ) {
+            if (!ganhador) {
+                setTimeout(() => {
+                    alert('Deu Velhaa!')
+                    valorInicialTroca()
+                    ganhador = true
+                    ganhou = true
+                }, 500)
             }
         }
     }
