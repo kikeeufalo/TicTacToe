@@ -34,7 +34,8 @@ function modoJogo(x) {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
         setTimeout(() => {
             modoJogo('escolhido')
-        }, 1000)
+            mensagens('')
+        }, 1500)
     }else {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
     }
@@ -233,16 +234,24 @@ function mensagens(x) {
     let m = window.document.getElementById('play')
     let msg = document.createElement('p')
 
-    msg.style.color = 'white'
-    msg.style.fontWeight = 'bold'
-    msg.style.fontSize = '22pt'
-    msg.style.display = 'flex'
-    msg.style.justifyContent = 'center'
-    msg.style.marginTop = '60px'
-    msg.style.position = 'absolute'
+    if (x !== '') {
+        msg.style.color = 'white'
+        msg.style.fontWeight = 'bold'
+        msg.style.fontSize = '22pt'
+        msg.style.display = 'flex'
+        msg.style.justifyContent = 'center'
+        msg.style.marginTop = '100px'
+        msg.style.position = 'absolute'
+        msg.style.width = '100%'
     
-    msg.textContent = x
+        msg.className('msg')
 
-    m.appendChild(msg)
-    modoJogo('msg')
+        msg.textContent = x
+    
+        m.appendChild(msg)
+        modoJogo('msg')
+    }else {
+        let esconde = window.document.getElementsByClassName('msg')
+        
+    }
 }
