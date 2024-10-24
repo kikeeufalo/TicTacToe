@@ -96,15 +96,10 @@ function jogadaIA() {
 
     if (possiveisJogadas.length > 0) {
         let jogadaAleatoria2 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
-        if (array.indexOf(jogadaAleatoria2)) {
-            let jogadaAleatoria1 = possiveisJogadas[Math.floor(Math.random() * possiveisJogadas.length)]
-            tabuleiro[jogadaAleatoria1[0]][jogadaAleatoria1[1]] = "O"
-            console.log(`IA jogou em (${jogadaAleatoria1[0]}, ${jogadaAleatoria1[1]})`)
-        }else {
-            tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
-            console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
-        }
-
+        
+        tabuleiro[jogadaAleatoria2[0]][jogadaAleatoria2[1]] = "O"
+        console.log(`IA jogou em (${jogadaAleatoria2[0]}, ${jogadaAleatoria2[1]})`)
+        possiveisJogadas = []
     }
 
     setTimeout(() => {    
@@ -133,7 +128,7 @@ function jogadaIA() {
 }
 
 function verificGanhador() {
-    let ganhador
+    let ganhador = false
     const combinacoesPosiveis = [
         //horizontal
         [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
@@ -148,6 +143,20 @@ function verificGanhador() {
         [tabuleiro[0][2], tabuleiro[1][1], tabuleiro[2][0]]
     ]
 
+    if (
+        tabuleiro[0][0] !== '' && tabuleiro[0][1] !== '' && tabuleiro[0][2] !== '' &&
+        tabuleiro[1][0] !== '' && tabuleiro[1][1] !== '' && tabuleiro[1][2] !== '' &&
+        tabuleiro[2][0] !== '' && tabuleiro[2][1] !== '' && tabuleiro[2][2] !== ''
+    ) {
+        if (!ganhador) {
+            setTimeout(() => {
+                alert('Deu Velhaa!')
+                valorInicialTroca()
+                ganhador == true
+            }, 500)
+        }
+    }
+
     for (let combinacao of combinacoesPosiveis) {
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
@@ -156,7 +165,9 @@ function verificGanhador() {
                     alert(`Player um ganhou`)
                     let s = Number(scorePlayerUm.textContent)
                     scorePlayerUm.textContent = s + 1
-                    valorInicialTroca()
+                    if (ganhador) {
+                        valorInicialTroca()
+                    }
                     ganhador = true
                 },500)
             }else {
@@ -164,23 +175,13 @@ function verificGanhador() {
                     alert(`player dois ganhou`)
                     let s = Number(scorePlayerDois.textContent)
                     scorePlayerDois.textContent = s + 1
-                    valorInicialTroca()
+                    if (ganhador) {
+                        valorInicialTroca()
+                    }
                 },500)
                 ganhador = true
             }
         }
-    }
-    
-    if (
-        tabuleiro[0][0] !== '' && tabuleiro[0][1] !== '' && tabuleiro[0][2] !== '' &&
-        tabuleiro[1][0] !== '' && tabuleiro[1][1] !== '' && tabuleiro[1][2] !== '' &&
-        tabuleiro[2][0] !== '' && tabuleiro[2][1] !== '' && tabuleiro[2][2] !== '' &&
-        ganhador == false
-    ) {
-        setTimeout(() => {
-            alert('Deu Velhaa!')
-            valorInicialTroca()
-        }, 500)
     }
 }
 
