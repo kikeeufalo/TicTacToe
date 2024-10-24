@@ -17,11 +17,21 @@ let tabuleiro = [
 doisPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = false
+
+    doisPlayerBtn.style.backgroundColor = "#f2af60"
+    doisPlayerBtn.style.padding = '4px'
+    doisPlayerBtn.style.boxShadow = 'none'
+    doisPlayerBtn.style.border = '1px solid black'
 })
 
 iaPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
+
+    iaPlayerBtn.style.backgroundColor = "#f2af60"
+    iaPlayerBtn.style.padding = '4px'
+    iaPlayerBtn.style.boxShadow = 'none'
+    iaPlayerBtn.style.border = '1px solid black'
 })
 
 function verific(y) {
@@ -33,7 +43,7 @@ function verific(y) {
         }else {    
             let jogada = y -1            
             if (vezOrdem) { // player um
-                
+                vezOrdem = false
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
                     tabuleiro[0][jogada] = 'X'
                 }else if (jogada <= 5) {
@@ -43,7 +53,6 @@ function verific(y) {
                 }
     
                 iterator.textContent = 'X'
-                vezOrdem = false
                 if (ia) {
                     jogadaIA()
                 }
@@ -62,7 +71,7 @@ function verific(y) {
                     vezOrdem = true
                     console.log(`player dois`)
                 }else {
-                    alert("Você esta jogando com IA")
+                    alert(`Você esta jogando com IA`)
                 }
 
             }
@@ -103,13 +112,14 @@ function jogadaIA() {
     }
 
     setTimeout(() => {    
+        vezOrdem = true
         for (let x = 0; x < 3; x++) {
             for (let y = 0; y < 3; y++) {
 
                 if (tabuleiro[x][y] === 'O') {
                     let posicaoArray = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
 
-                    for (let i = 0; i < posicaoArray.length; i++) {
+                    for (let i = 0; i <= posicaoArray.length; i++) {
                         let index = i - 1
 
                         if (posicaoArray[index] === 'O') {
@@ -123,8 +133,6 @@ function jogadaIA() {
             }
         }
     }, 500) 
-
-    vezOrdem = true
 }
 
 function verificGanhador() {
