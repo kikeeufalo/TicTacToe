@@ -17,21 +17,11 @@ let tabuleiro = [
 doisPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = false
-
-    doisPlayerBtn.style.backgroundColor = "#f2af60"
-    doisPlayerBtn.style.padding = '4px'
-    doisPlayerBtn.style.boxShadow = 'none'
-    doisPlayerBtn.style.border = '1px solid black'
 })
 
 iaPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
-
-    iaPlayerBtn.style.backgroundColor = "#f2af60"
-    iaPlayerBtn.style.padding = '4px'
-    iaPlayerBtn.style.boxShadow = 'none'
-    iaPlayerBtn.style.border = '1px solid black'
 })
 
 function verific(y) {
