@@ -163,7 +163,7 @@ function verificGanhador() {
 
 
 
-    for (let combinacao of combinacoesPosiveis) {
+    for (let combinacao of combinacoesPosiveis) { // verifica ganhadores
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
             if (combinacao[0] === 'X') {
@@ -178,6 +178,7 @@ function verificGanhador() {
                         valorInicialTroca()
                     }
                 },500)
+                return combinacao[0]
             }else {
                 ganhou = true
                 ganhador = true
@@ -190,6 +191,7 @@ function verificGanhador() {
                     }
             },500)
             }
+            return combinacao[0]
         }
     }
     if (!ganhou) {
@@ -205,9 +207,11 @@ function verificGanhador() {
                     ganhador = true
                     ganhou = true
                 }, 500)
+                return 'empate'
             }
         }
     }
+    return null
 }
 
 function valorInicialTroca(x) {
@@ -228,6 +232,63 @@ function valorInicialTroca(x) {
         let btn = window.document.getElementById(`${i}`)
         btn.textContent = ''
     }
+}
+
+function minimax(newBoard, jogador) { // escolhe a melhor opção de jogada para a ia
+    const humano = 'X' // define qual simbolo é o humano
+    const ia = 'O'
+
+    let winner = verificGanhador(newBoard)
+
+    if (winner === ia) {
+        return { score: 10}
+    }else if (winner === humano) {
+        return { score: -10}
+    }else if (winner === 'empate') {
+        return { score: 0}
+    }
+
+    let movimentosPossiveis = []
+
+    newBoard.forEach((spot, index) => {
+        if (!spot) {
+            let movimentos = {}
+
+            movimentos.index = index
+            newBoard[index] = jogador
+
+            if (jogador === ia) {
+                let resultado = minimax(newBoard, humano)
+                movimentos.score = resultado.score
+            }else {
+                let resultado = minimax(newBoard, ia)
+                movimentos.score = resultado.score
+            }
+
+            newBoard[index] = ''
+            movimentosPossiveis.push(movimentos)
+        }
+    });
+
+    let bestMove
+    if (jogador === ia) {
+        let bestScore = -Infinity
+        movimentosPossiveis.forEach(movimentos => {
+            if (movimentos.score > bestScore) {
+                bestScore = movimentos.score
+                bestMove = movimentos
+            }
+        })
+    }else {
+        let bestScore = Infinity
+        movimentosPossiveis.forEach(movimentos => {
+            if (movimentos.score < bestScore) {
+                bestScore = move.score
+                bestMove = movimentos
+            }
+        })
+    }
+    return bestMove
 }
 
 function mensagens(x, y) {
