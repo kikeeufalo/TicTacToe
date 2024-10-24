@@ -103,7 +103,7 @@ function verific(y) {
     console.log(tabuleiro)
 }
 
-function jogadaIA() {
+function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
     let possiveisJogadas = []
 
     for (let x = 0; x < 3; x++) {
@@ -236,62 +236,6 @@ function valorInicialTroca(x) {
     }
 }
 
-function minimax(newBoard, jogador) { // escolhe a melhor opção de jogada para a ia
-    const humano = 'X' // define qual simbolo é o humano
-    const ia = 'O'
-
-    let winner = verificGanhador(newBoard)
-
-    if (winner === ia) {
-        return { score: 10}
-    }else if (winner === humano) {
-        return { score: -10}
-    }else if (winner === 'empate') {
-        return { score: 0}
-    }
-
-    let movimentosPossiveis = []
-
-    newBoard.forEach((spot, index) => {
-        if (!spot) {
-            let movimentos = {}
-
-            movimentos.index = index
-            newBoard[index] = jogador
-
-            if (jogador === ia) {
-                let resultado = minimax(newBoard, humano)
-                movimentos.score = resultado.score
-            }else {
-                let resultado = minimax(newBoard, ia)
-                movimentos.score = resultado.score
-            }
-
-            newBoard[index] = ''
-            movimentosPossiveis.push(movimentos)
-        }
-    });
-
-    let bestMove
-    if (jogador === ia) {
-        let bestScore = -Infinity
-        movimentosPossiveis.forEach(movimentos => {
-            if (movimentos.score > bestScore) {
-                bestScore = movimentos.score
-                bestMove = movimentos
-            }
-        })
-    }else {
-        let bestScore = Infinity
-        movimentosPossiveis.forEach(movimentos => {
-            if (movimentos.score < bestScore) {
-                bestScore = move.score
-                bestMove = movimentos
-            }
-        })
-    }
-    return bestMove
-}
 
 function mensagens(x, y) {
     let m = window.document.getElementById('play')
