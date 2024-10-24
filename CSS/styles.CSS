@@ -8,6 +8,7 @@ body {
     );
 }
 
+
 .containerGame {
     padding: 0;
     margin: 0;
@@ -62,7 +63,7 @@ input:focus {
 
 .game {
     position: absolute;
-    background-color: #f2af60;
+    background-color: rgb(242, 175, 96);
     min-width: 300px;
     min-height: 300px;
     width: auto;
@@ -127,12 +128,24 @@ button:hover {
     border: none;
     background-color: #fdcc95;
     box-shadow: 3px 3px 5px black;
-    transition: 3s black;
+}
+
+@keyframes pulse {
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.01);
+    }
+    100%{
+        transform: scale(1);
+    }
 }
 
 .inputBtn:hover {
     cursor: pointer;
     background-color: #f0b674;
+    animation: pulse 1s infinite;
 }
 
 .inputBtn:active {
