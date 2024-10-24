@@ -30,6 +30,11 @@ function modoJogo(x) {
     let escolhaModo = window.document.getElementById('play')
     if (x === 'escolhido') {
         escolhaModo.style.backgroundColor = ''
+    }else if (x === 'msg') {
+        escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
+        setTimeout(() => {
+            modoJogo('escolhido')
+        }, 1000)
     }else {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
     }
@@ -226,7 +231,7 @@ function valorInicialTroca(x) {
 
 function mensagens(x) {
     let m = window.document.getElementById('play')
-    let msg = document.createElement('div')
+    let msg = document.createElement('p')
 
     msg.style.color = 'white'
     msg.style.fontWeight = 'bold'
@@ -239,4 +244,5 @@ function mensagens(x) {
     msg.textContent = x
 
     m.appendChild(msg)
+    modoJogo('msg')
 }
