@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogo da velha</title>
 </head>
-<body>
+<body onload="modoJogo()">
     <div class="containerGame">
         <h1 class="titulo">Jogo da Velha</h1>
         <div class="scorePlayers">
@@ -15,7 +15,7 @@
             <p><input maxlength="10" class="styleInput" id="player2" type="text" placeholder="Player_2:" autocomplete="off"><span id="scoreP2"></span></p>
         </div>
         <div class="center">
-            <div class="game gridGame">
+            <div id="play" class="game gridGame">
                 <button id="1" onclick="verific(1)" class="font "></button>
                 <button id="2" onclick="verific(2)" class="font meioDireito meioEsquerdo"></button>
                 <button id="3" onclick="verific(3)" class="font "></button>
