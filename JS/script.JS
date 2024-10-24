@@ -243,15 +243,15 @@ function mensagens(x) {
         msg.style.marginTop = '100px'
         msg.style.position = 'absolute'
         msg.style.width = '100%'
-    
-        msg.className('msg')
+        
+        msg.id = 'msg'
 
         msg.textContent = x
     
         m.appendChild(msg)
         modoJogo('msg')
     }else {
-        let esconde = window.document.getElementsByClassName('msg')
-        
+        let esconde = window.document.getElementById('msg')
+        m.removeChild(esconde)
     }
 }
