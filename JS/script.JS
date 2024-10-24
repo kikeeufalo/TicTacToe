@@ -293,11 +293,6 @@ function minimax(newBoard, jogador) { // escolhe a melhor opção de jogada para
     return bestMove
 }
 
-function iaMove(board) { //melhor jogada da ia
-    let move = minimax(board, 'O')
-    board[move.index] = 'O'
-}
-
 function mensagens(x, y) {
     let m = window.document.getElementById('play')
     let msg = document.createElement('p')
