@@ -5,7 +5,7 @@ let vezOrdem = true
 let scorePlayerUm = window.document.getElementById('scoreP1')
 let scorePlayerDois = window.document.getElementById('scoreP2')
 let array = [] //armazena as posições ja jogadas
-let controlePartidaGanha = true
+let controlePartidaGanha = false
 let ia = false
 
 let tabuleiro = [
@@ -17,12 +17,14 @@ let tabuleiro = [
 doisPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = false
+    controlePartidaGanha = true
     modoJogo('escolhido')
 })
 
 iaPlayerBtn.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
+    controlePartidaGanha = true
     modoJogo('escolhido')
 })
 
@@ -35,7 +37,7 @@ function modoJogo(x) {
         setTimeout(() => {
             modoJogo('escolhido')
             mensagens('')
-        }, 1500)
+        }, 2000)
     }else {
         escolhaModo.style.backgroundColor = 'rgba(242, 175, 96, 0.6)'
     }
@@ -78,7 +80,7 @@ function verific(y) {
                     vezOrdem = true
                     console.log(`player dois`)
                 }else {
-                    alert(`Você esta jogando com IA`)
+                    mensagens('Você esta jogando com IA')
                 }
 
             }
@@ -91,8 +93,6 @@ function verific(y) {
                 }
             }
         }
-    }else {
-        alert('A partida acabou!')
     }
 
     verificGanhador()
@@ -169,7 +169,7 @@ function verificGanhador() {
                 ganhador = true
 
                 setTimeout(() => {
-                    alert(`Player um ganhou`)
+                    mensagens('Player um venceu!')
                     let s = Number(scorePlayerUm.textContent)
                     scorePlayerUm.textContent = s + 1
                     if (ganhador) {
@@ -180,7 +180,7 @@ function verificGanhador() {
                 ganhou = true
                 ganhador = true
                 setTimeout(() => {
-                    alert(`player dois ganhou`)
+                    mensagens('Player dois venceu!')
                     let s = Number(scorePlayerDois.textContent)
                     scorePlayerDois.textContent = s + 1
                     if (ganhador) {
@@ -198,7 +198,7 @@ function verificGanhador() {
         ) {
             if (!ganhador) {
                 setTimeout(() => {
-                    alert('Deu Velhaa!')
+                    mensagens('Deu Velhaa!')
                     valorInicialTroca()
                     ganhador = true
                     ganhou = true
@@ -226,8 +226,6 @@ function valorInicialTroca(x) {
         let btn = window.document.getElementById(`${i}`)
         btn.textContent = ''
     }
-
-    alert('Recomeçando...')
 }
 
 function mensagens(x) {
