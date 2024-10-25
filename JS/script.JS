@@ -169,9 +169,17 @@ function aiMove() {
             }
         }
     }
-    tabuleiro[move[0]][move[1]] = ai
-    vezOrdem = true
-    console.log(move)
+
+    
+    // Realiza o movimento da IA
+    if (move) {
+        tabuleiro[move[0]][move[1]] = ai;
+        let cellId = move[0] * 3 + move[1] + 1;
+        document.getElementById(`${cellId}`).textContent = ai;
+        array.push(cellId); // Marca a posição no array
+    }
+    // Define a vez para o próximo jogador
+    vezOrdem = true;
 }
 
 function minimax(board, depth, isMaximizing) {
