@@ -153,7 +153,6 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 let board = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
 let human = 'X';
 let ai = 'O';
-let currentPlayer = human;
 
 function aiMove() {
     let bestScore = -Infinity;
@@ -169,10 +168,9 @@ function aiMove() {
             }
         }
     }
-    board[move] = ai;
-    currentPlayer = human;
+    tabuleiro[move] = ai;
     vezOrdem = true
-    console.log(verificVez(), board)
+    console.log(move)
 }
 
 function minimax(board, depth, isMaximizing) {
