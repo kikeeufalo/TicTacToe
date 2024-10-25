@@ -53,7 +53,6 @@ function verific(y) {
         } else {
             let jogada = y - 1
             if (vezOrdem) { // player um
-                vezOrdem = false
                 if (jogada <= 2) { // define o lugar jogado no tabuleiro
                     tabuleiro[0][jogada] = 'X'
                 } else if (jogada <= 5) {
@@ -62,7 +61,7 @@ function verific(y) {
                     tabuleiro[2][jogada - 6] = 'X'
                 }
                 
-
+                vezOrdem = false
                 iterator.textContent = 'X'
                 if (ia) {
                     aiMove()
@@ -154,8 +153,6 @@ let human = 'X';
 let ai = 'O';
 
 function aiMove() {
-    let board = tabuleiro
-
     let bestScore = -Infinity;
     let move
 
@@ -167,12 +164,12 @@ function aiMove() {
                 tabuleiro[a][b] = ''
                 if (score > bestScore) {
                     bestScore = score
-                    move = a,b
+                    move = [a,b]
                 }
             }
         }
     }
-    tabuleiro[move]
+    tabuleiro[move[0]][move[1]] = ai
     vezOrdem = true
     console.log(move)
 }
@@ -186,36 +183,64 @@ function minimax(board, depth, isMaximizing) {
     if (isMaximizing) {
         let bestScore = -Infinity;
         for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = ai;
-                let score = minimax(board, depth + 1, false);
-                board[i] = '';
-                bestScore = Math.max(score, bestScore)
+            for (let j = 0; j < board[i].length; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = ai;
+                    let score = minimax(board, depth + 1, false);
+                    board[i][j] = '';
+                    bestScore = Math.max(score, bestScore)
+                }
             }
         }
         return bestScore;
     } else {
         let bestScore = Infinity;
         for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = human;
-                let score = minimax(board, depth + 1, true);
-                board[i] = '';
-                bestScore = Math.min(score, bestScore);
+            for (let j = 0; j < board[i].length; j++) {
+                if (board[i][j] === '') {
+                    board[i][j] = human;
+                    let score = minimax(board, depth + 1, true);
+                    board[i][j] = '';
+                    bestScore = Math.min(score, bestScore);
+                }
             }
         }
         return bestScore;
     }
 }
 
+
 function verificVez() {
-    if (vezOrdem) {
-        return 'X'
-    }else if (!vezOrdem) {
-        return 'O'
-    }else if (verificGanhador() === 'Empate') {
-        return 'Empate'
+    const result = verificaPossivelGanhador();
+    if (result === 'X' || result === 'O' || result === 'Empate') {
+        return result;
     }
+    return null;
+}
+
+function verificaPossivelGanhador() {
+    const combinacoesPosiveis = [
+        [tabuleiro[0][0], tabuleiro[0][1], tabuleiro[0][2]],
+        [tabuleiro[1][0], tabuleiro[1][1], tabuleiro[1][2]],
+        [tabuleiro[2][0], tabuleiro[2][1], tabuleiro[2][2]],
+        [tabuleiro[0][0], tabuleiro[1][0], tabuleiro[2][0]],
+        [tabuleiro[0][1], tabuleiro[1][1], tabuleiro[2][1]],
+        [tabuleiro[0][2], tabuleiro[1][2], tabuleiro[2][2]],
+        [tabuleiro[0][0], tabuleiro[1][1], tabuleiro[2][2]],
+        [tabuleiro[0][2], tabuleiro[1][1], tabuleiro[2][0]]
+    ];
+
+    for (let combinacao of combinacoesPosiveis) {
+        if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
+            return combinacao[0];
+        }
+    }
+
+    // Verifica empate
+    if (tabuleiro.flat().every(cell => cell !== '')) {
+        return 'Empate';
+    }
+    return null;
 }
 
 //---------------------------------------
@@ -285,7 +310,6 @@ function verificGanhador() {
                     ganhador = true
                     ganhou = true
                 }, 500)
-                return 'Empate'
             }
         }
     }
