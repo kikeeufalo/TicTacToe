@@ -61,7 +61,7 @@ function verific(y) {
                 } else {
                     tabuleiro[2][jogada - 6] = 'X'
                 }
-
+                
 
                 iterator.textContent = 'X'
                 if (ia) {
@@ -149,67 +149,63 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 
 // -------------------------------------
 
-function minimax(board, isMaximizing) {
-    // Verifica se há um vencedor e retorna um valor baseado no resultado
-    let winner = checkWinner();
-    if (winner === ai) return 1;       // Vitória da IA: pontuação positiva
-    if (winner === human) return -1;   // Vitória do humano: pontuação negativa
-    if (winner === 'Empate') return 0; // Empate: pontuação neutra
 
-    // IA tenta maximizar a pontuação
-    if (isMaximizing) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (board[i][j] === '') { // Se a célula está vazia
-                    board[i][j] = ai; // Faz o movimento da IA
-                    let score = minimax(board, false); // Recursivamente chama minimax para o próximo movimento
-                    board[i][j] = ''; // Desfaz o movimento
-                    bestScore = Math.max(score, bestScore); // Escolhe o maior valor (o melhor movimento para a IA)
-                }
-            }
-        }
-        return bestScore; // Retorna a melhor pontuação encontrada para a IA
-    }
-    // Jogador tenta minimizar a pontuação
-    else {
-        let bestScore = Infinity;
-        for (let i = 0; i < 3; i++) {
-            for (let j = 0; j < 3; j++) {
-                if (board[i][j] === '') { // Se a célula está vazia
-                    board[i][j] = human; // Faz o movimento do jogador
-                    let score = minimax(board, true); // Recursivamente chama minimax para o próximo movimento
-                    board[i][j] = ''; // Desfaz o movimento
-                    bestScore = Math.min(score, bestScore); // Escolhe o menor valor (o pior para a IA, logo melhor para o humano)
-                }
-            }
-        }
-        return bestScore; // Retorna a melhor pontuação encontrada para o humano
-    }
-}
+
+let board = []
+let human = 'X';
+let ai = 'O';
+let currentPlayer = human;
 
 function aiMove() {
+    let arrayBoard = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
+    board = arrayBoard
     let bestScore = -Infinity;
-    let bestMove;
-
-    // Tenta cada célula vazia no tabuleiro
-    for (let i = 0; i < 3; i++) {
-        for (let j = 0; j < 3; j++) {
-            if (board[i][j] === '') { // Se a célula está vazia
-                board[i][j] = ai; // Faz o movimento da IA
-                let score = minimax(board, false); // Chama minimax para avaliar o movimento
-                board[i][j] = ''; // Desfaz o movimento para testar a próxima posição
-                if (score > bestScore) { // Se a pontuação atual for melhor que a anterior
-                    bestScore = score; // Atualiza a melhor pontuação
-                    bestMove = { i, j }; // Salva o melhor movimento
-                }
+    let move
+    for (let i = 0; i < board.length; i++) {
+        if (board[i] === '') {
+            board[i] = ai;
+            let score = minimax(board, 0, false);
+            board[i] = '';
+            console.log(score)
+            if (score > bestScore) {
+                bestScore = score;
+                move = i
             }
         }
     }
+    board[move] = ai;
+    currentPlayer = human;
+    vezOrdem = true
+}
 
-    // Faz o melhor movimento encontrado
-    if (bestMove) {
-        makeMove(bestMove.i, bestMove.j, ai);
+function minimax(board, depth, isMaximizing) {
+    let winner = verificGanhador();
+    if (winner === ai) return -10 + depth;
+    if (winner === human) return 10 - depth;
+    if (winner === 'Empate') return 0;
+
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = ai;
+                let score = minimax(board, depth + 1, false);
+                board[i] = '';
+                bestScore = Math.max(score, bestScore)
+            }
+        }
+        return bestScore;
+    } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < board.length; i++) {
+            if (board[i] === '') {
+                board[i] = human;
+                let score = minimax(board, depth + 1, true);
+                board[i] = '';
+                bestScore = Math.min(score, bestScore);
+            }
+        }
+        return bestScore;
     }
 }
 
