@@ -146,7 +146,7 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 
 }
 
-// -------------------------------------
+// ----------- Parte da IA 'cerebro'  --------------------------
 
  
 let human = 'X';
@@ -178,10 +178,10 @@ function aiMove() {
             let cellId = move[0] * 3 + move[1] + 1;
             document.getElementById(`${cellId}`).textContent = ai;
             array.push(cellId); // Marca a posição no array
+            vezOrdem = true;
         }, 500)
     }
     // Define a vez para o próximo jogador
-    vezOrdem = true;
 }
 
 function minimax(board, depth, isMaximizing) {
@@ -276,11 +276,10 @@ function verificGanhador() {
         [tabuleiro[0][2], tabuleiro[1][1], tabuleiro[2][0]]
     ]
 
-
-
     for (let combinacao of combinacoesPosiveis) { // verifica ganhadores
         if (combinacao[0] !== '' && combinacao[0] === combinacao[1] && combinacao[1] === combinacao[2]) {
             controlePartidaGanha = false
+
             if (combinacao[0] === 'X') {
                 ganhou = true
                 ganhador = true
