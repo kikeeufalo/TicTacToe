@@ -149,16 +149,13 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 
 // -------------------------------------
 
-
-
-let board = []
+ 
+let board = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
 let human = 'X';
 let ai = 'O';
 let currentPlayer = human;
 
 function aiMove() {
-    let arrayBoard = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
-    board = arrayBoard
     let bestScore = -Infinity;
     let move
     for (let i = 0; i < board.length; i++) {
@@ -166,7 +163,6 @@ function aiMove() {
             board[i] = ai;
             let score = minimax(board, 0, false);
             board[i] = '';
-            console.log(score)
             if (score > bestScore) {
                 bestScore = score;
                 move = i
@@ -176,10 +172,11 @@ function aiMove() {
     board[move] = ai;
     currentPlayer = human;
     vezOrdem = true
+    console.log(verificVez(), board)
 }
 
 function minimax(board, depth, isMaximizing) {
-    let winner = verificGanhador();
+    let winner = verificVez();
     if (winner === ai) return -10 + depth;
     if (winner === human) return 10 - depth;
     if (winner === 'Empate') return 0;
@@ -206,6 +203,16 @@ function minimax(board, depth, isMaximizing) {
             }
         }
         return bestScore;
+    }
+}
+
+function verificVez() {
+    if (vezOrdem) {
+        return 'X'
+    }else if (!vezOrdem) {
+        return 'O'
+    }else if (verificGanhador() === 'Empate') {
+        return 'Empate'
     }
 }
 
@@ -249,7 +256,6 @@ function verificGanhador() {
                         valorInicialTroca()
                     }
                 }, 500)
-                return 'X'
             } else {
                 ganhou = true
                 ganhador = true
@@ -261,7 +267,6 @@ function verificGanhador() {
                         valorInicialTroca()
                     }
                 }, 500)
-                return 'O'
             }
         }
     }
