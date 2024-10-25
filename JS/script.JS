@@ -8,6 +8,8 @@ let array = [] //armazena as posições ja jogadas
 let controlePartidaGanha = false
 let ia = false
 let checkWinner
+let msgtell = true
+
 
 let tabuleiro = [
     ['', '', ''],
@@ -47,7 +49,7 @@ function modoJogo(x) {
 function verific(y) {
     let iterator = window.document.getElementById(`${y}`)
 
-    if (controlePartidaGanha) {
+    if (controlePartidaGanha && msgtell) {
         if (array.includes(y)) { // verifica se a posição ja foi jogada
             mensagens('posição ja jogada')
         } else {
@@ -95,7 +97,11 @@ function verific(y) {
             }
         }
     } else {
-        mensagens('Escolha um modo', 'aviso')
+        if (!msgtell) {
+            mensagens('Espera pow')
+        }else {
+            mensagens('Escolha um modo', 'aviso')
+        }
     }
 
     verificGanhador()
@@ -178,6 +184,8 @@ function aiMove() {
             let cellId = move[0] * 3 + move[1] + 1;
             document.getElementById(`${cellId}`).textContent = ai;
             array.push(cellId); // Marca a posição no array
+
+            verificGanhador()
             vezOrdem = true;
         }, 500)
     }
@@ -361,6 +369,11 @@ function mensagens(x, y) {
 
     msg.id = 'msg'
 
+    msgtell = false
+    setTimeout(() => {
+        msgtell = true
+    }, 500)
+    
     if (y === 'aviso') {
         msg.textContent = x
         m.appendChild(msg)
