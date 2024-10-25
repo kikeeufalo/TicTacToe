@@ -150,33 +150,37 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 // -------------------------------------
 
  
-let board = tabuleiro[0].concat(tabuleiro[1], tabuleiro[2])
 let human = 'X';
 let ai = 'O';
 
 function aiMove() {
+    let board = tabuleiro
+
     let bestScore = -Infinity;
     let move
-    for (let i = 0; i < board.length; i++) {
-        if (board[i] === '') {
-            board[i] = ai;
-            let score = minimax(board, 0, false);
-            board[i] = '';
-            if (score > bestScore) {
-                bestScore = score;
-                move = i
+
+    for (let a = 0; a < 3; a++) {
+        for (let b = 0; b < 3; b++) {
+            if (tabuleiro[a][b] === '') {
+                tabuleiro[a][b] = ai
+                let score = minimax(tabuleiro, 0, false)
+                tabuleiro[a][b] = ''
+                if (score > bestScore) {
+                    bestScore = score
+                    move = a,b
+                }
             }
         }
     }
-    tabuleiro[move] = ai;
+    tabuleiro[move]
     vezOrdem = true
     console.log(move)
 }
 
 function minimax(board, depth, isMaximizing) {
     let winner = verificVez();
-    if (winner === ai) return -10 + depth;
-    if (winner === human) return 10 - depth;
+    if (winner === human) return -10 + depth;
+    if (winner === ai) return 10 - depth;
     if (winner === 'Empate') return 0;
 
     if (isMaximizing) {
