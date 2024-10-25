@@ -170,13 +170,15 @@ function aiMove() {
         }
     }
 
-    
+
     // Realiza o movimento da IA
     if (move) {
-        tabuleiro[move[0]][move[1]] = ai;
-        let cellId = move[0] * 3 + move[1] + 1;
-        document.getElementById(`${cellId}`).textContent = ai;
-        array.push(cellId); // Marca a posição no array
+        setTimeout(() => {
+            tabuleiro[move[0]][move[1]] = ai;
+            let cellId = move[0] * 3 + move[1] + 1;
+            document.getElementById(`${cellId}`).textContent = ai;
+            array.push(cellId); // Marca a posição no array
+        }, 500)
     }
     // Define a vez para o próximo jogador
     vezOrdem = true;
