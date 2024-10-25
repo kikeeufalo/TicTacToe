@@ -161,10 +161,12 @@ button:hover {
 
 #btn-08 {
     margin-top: 370px;
+    visibility: hidden;
 }
 
 #btn-80 {
     margin-top: 30px;
+    visibility: hidden;
 }
 
 .dific {

@@ -4,12 +4,16 @@ const iaPlayerBtn = window.document.getElementById('btn-2')
 let vezOrdem = true
 let scorePlayerUm = window.document.getElementById('scoreP1')
 let scorePlayerDois = window.document.getElementById('scoreP2')
+let btn08 = window.document.getElementById('btn-08')
+let btn80 = window.document.getElementById('btn-80')
 let array = [] //armazena as posições ja jogadas
 let controlePartidaGanha = false
 let ia = false
 let checkWinner
 let msgtell = true
 
+let ia08 = false
+let ia80 = false
 
 let tabuleiro = [
     ['', '', ''],
@@ -20,13 +24,34 @@ let tabuleiro = [
 doisPlayerBtn.addEventListener('click', function () {
     valorInicialTroca(true)
     ia = false
+    ia08 = false
+    ia80 = false
     controlePartidaGanha = true
     modoJogo('escolhido')
 })
 
-iaPlayerBtn.addEventListener('click', function () {
+iaPlayerBtn.addEventListener('mouseenter', function() {
+    btn08.style.visibility = 'visible'
+    btn80.style.visibility = 'visible'
+})
+
+iaPlayerBtn.addEventListener('mouseleave', function() {
+    setTimeout(() => {
+        btn08.style.visibility = 'hidden'
+        btn80.style.visibility = 'hidden'
+    }, 3000)
+})
+
+btn08.addEventListener('click', function() {
     valorInicialTroca(true)
-    ia = true
+    ia08 = true
+    controlePartidaGanha = true
+    modoJogo('escolhido')
+})
+
+btn80.addEventListener('click', function() {
+    valorInicialTroca(true)
+    ia80 = true
     controlePartidaGanha = true
     modoJogo('escolhido')
 })
@@ -66,7 +91,13 @@ function verific(y) {
                 vezOrdem = false
                 iterator.textContent = 'X'
                 if (ia) {
-                    aiMove()
+                    if (ia08) {
+                        jogadaIA()
+                    }else if (ia80) {
+                        aiMove()
+                    }else {
+                        mensagens('Erro!', 'aviso')
+                    }
                 }
             } else {//player dois
 
