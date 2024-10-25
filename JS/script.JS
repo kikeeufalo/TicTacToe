@@ -7,6 +7,7 @@ let scorePlayerDois = window.document.getElementById('scoreP2')
 let array = [] //armazena as posições ja jogadas
 let controlePartidaGanha = false
 let ia = false
+let checkWinner
 
 let tabuleiro = [
     ['', '', ''],
@@ -61,7 +62,6 @@ function verific(y) {
                     tabuleiro[2][jogada - 6] = 'X'
                 }
 
-                console.log('')
 
                 iterator.textContent = 'X'
                 if (ia) {
@@ -149,85 +149,69 @@ function jogadaIA() { // uma jogada aleatoria que a 'ia' faz
 
 // -------------------------------------
 
+function minimax(board, isMaximizing) {
+    // Verifica se há um vencedor e retorna um valor baseado no resultado
+    let winner = checkWinner();
+    if (winner === ai) return 1;       // Vitória da IA: pontuação positiva
+    if (winner === human) return -1;   // Vitória do humano: pontuação negativa
+    if (winner === 'Empate') return 0; // Empate: pontuação neutra
 
-
-let board = ['', '', '', '', '', '', '', '', ''];
-let human = 'X';
-let ai = 'O';
-let currentPlayer = human;
-
-const winningCombinations = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-];
+    // IA tenta maximizar a pontuação
+    if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') { // Se a célula está vazia
+                    board[i][j] = ai; // Faz o movimento da IA
+                    let score = minimax(board, false); // Recursivamente chama minimax para o próximo movimento
+                    board[i][j] = ''; // Desfaz o movimento
+                    bestScore = Math.max(score, bestScore); // Escolhe o maior valor (o melhor movimento para a IA)
+                }
+            }
+        }
+        return bestScore; // Retorna a melhor pontuação encontrada para a IA
+    }
+    // Jogador tenta minimizar a pontuação
+    else {
+        let bestScore = Infinity;
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (board[i][j] === '') { // Se a célula está vazia
+                    board[i][j] = human; // Faz o movimento do jogador
+                    let score = minimax(board, true); // Recursivamente chama minimax para o próximo movimento
+                    board[i][j] = ''; // Desfaz o movimento
+                    bestScore = Math.min(score, bestScore); // Escolhe o menor valor (o pior para a IA, logo melhor para o humano)
+                }
+            }
+        }
+        return bestScore; // Retorna a melhor pontuação encontrada para o humano
+    }
+}
 
 function aiMove() {
     let bestScore = -Infinity;
-    let move;
-    for (let i = 0; i < board.length; i++) {
-        if (board[i] === '') {
-            board[i] = ai;
-            let score = minimax(board, 0, false);
-            board[i] = '';
-            if (score > bestScore) {
-                bestScore = score;
-                move = i;
+    let bestMove;
+
+    // Tenta cada célula vazia no tabuleiro
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] === '') { // Se a célula está vazia
+                board[i][j] = ai; // Faz o movimento da IA
+                let score = minimax(board, false); // Chama minimax para avaliar o movimento
+                board[i][j] = ''; // Desfaz o movimento para testar a próxima posição
+                if (score > bestScore) { // Se a pontuação atual for melhor que a anterior
+                    bestScore = score; // Atualiza a melhor pontuação
+                    bestMove = { i, j }; // Salva o melhor movimento
+                }
             }
         }
     }
-    board[move] = ai;
-    currentPlayer = human;
-    checkWinner(board, ai);
-}
 
-function minimax(board, depth, isMaximizing) {
-    let winner = checkWinner(board, human) || checkWinner(board, ai);
-    if (winner === human) return -10 + depth;
-    if (winner === ai) return 10 - depth;
-    if (checkDraw()) return 0;
-
-    if (isMaximizing) {
-        let bestScore = -Infinity;
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = ai;
-                let score = minimax(board, depth + 1, false);
-                board[i] = '';
-                bestScore = Math.max(score, bestScore);
-            }
-        }
-        return bestScore;
-    } else {
-        let bestScore = Infinity;
-        for (let i = 0; i < board.length; i++) {
-            if (board[i] === '') {
-                board[i] = human;
-                let score = minimax(board, depth + 1, true);
-                board[i] = '';
-                bestScore = Math.min(score, bestScore);
-            }
-        }
-        return bestScore;
+    // Faz o melhor movimento encontrado
+    if (bestMove) {
+        makeMove(bestMove.i, bestMove.j, ai);
     }
 }
-
-function checkWinner(board, player) {
-    for (let combo of winningCombinations) {
-        if (combo.every(index => board[index] === player)) {
-            alert(`${player} venceu!`);
-            return true;
-        }
-    }
-    return false;
-}
-
-
 
 //---------------------------------------
 
@@ -269,7 +253,7 @@ function verificGanhador() {
                         valorInicialTroca()
                     }
                 }, 500)
-                return combinacao[0]
+                return 'X'
             } else {
                 ganhou = true
                 ganhador = true
@@ -281,8 +265,8 @@ function verificGanhador() {
                         valorInicialTroca()
                     }
                 }, 500)
+                return 'O'
             }
-            return combinacao[0]
         }
     }
     if (!ganhou) {
@@ -298,11 +282,10 @@ function verificGanhador() {
                     ganhador = true
                     ganhou = true
                 }, 500)
-                return 'empate'
+                return 'Empate'
             }
         }
     }
-    return null
 }
 
 function valorInicialTroca(x) {
