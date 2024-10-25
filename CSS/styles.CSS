@@ -154,3 +154,25 @@ button:hover {
     box-shadow: none;
     border: 1px solid black;
 }
+
+.dific, input {
+    margin: 15px;
+}
+
+#btn-08 {
+    margin-top: 370px;
+}
+
+#btn-80 {
+    margin-top: 30px;
+}
+
+.dific {
+    display: flex;
+}
+
+.contBtn {
+    display: flex;
+    justify-content: center;
+    margin-left: 70px;
+}
