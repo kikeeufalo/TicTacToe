@@ -46,6 +46,7 @@ btn08.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
     ia08 = true
+    ia80 = false
     controlePartidaGanha = true
     modoJogo('escolhido')
     mensagens('Modo 08 escolhido')
@@ -55,6 +56,7 @@ btn80.addEventListener('click', function() {
     valorInicialTroca(true)
     ia = true
     ia80 = true
+    ia08 = false
     controlePartidaGanha = true
     modoJogo('escolhido')
     mensagens('Modo 80 escolhido')
